@@ -439,6 +439,10 @@
     <Content Include="Assets\img\Bose-QuietComfort-Ultra-Headphones-anhphu1.jpg" />
     <Content Include="Assets\img\Bose-QuietComfort-Ultra-Headphones-anhphu2.jpg" />
     <Content Include="Assets\img\Bose-QuietComfort-Ultra-Headphones-anhphu3.jpg" />
+    <Content Include="Assets\img\capsacapple-anhchinh.jpg" />
+    <Content Include="Assets\img\capsacapple-anhphu1.jpg" />
+    <Content Include="Assets\img\capsacapple-anhphu2.jpg" />
+    <Content Include="Assets\img\capsacapple-anhphu3.jpg" />
     <Content Include="Assets\img\Chuot-Logitech-G-Pro-X-Superlight-2-Magenta-anhchinh.jpg" />
     <Content Include="Assets\img\Chuot-Logitech-G-Pro-X-Superlight-2-Magenta-anhphu1.jpg" />
     <Content Include="Assets\img\Chuot-Logitech-G-Pro-X-Superlight-2-Magenta-anhphu2.jpg" />
@@ -564,6 +568,14 @@
     <Content Include="Assets\img\loa-jbl-authentics-200-11_1.jpeg" />
     <Content Include="Assets\img\loa-jbl-authentics-200-2_1.jpeg" />
     <Content Include="Assets\img\loa-jbl-authentics-200_11_.jpeg" />
+    <Content Include="Assets\img\sacnhanhsamsung-anhchinh.jpg" />
+    <Content Include="Assets\img\sacnhanhsamsung-anhphu1.jpg" />
+    <Content Include="Assets\img\sacnhanhsamsung-anhphu2.jpg" />
+    <Content Include="Assets\img\sacnhanhsamsung-anhphu3.jpg" />
+    <Content Include="Assets\img\sacsamsung-anhchinh.jpg" />
+    <Content Include="Assets\img\sacsamsung-anhphu1.jpg" />
+    <Content Include="Assets\img\sacsamsung-anhphu2.jpg" />
+    <Content Include="Assets\img\sacsamsung-anhphu3.jpg" />
     <Content Include="Assets\img\Samsung-Galaxy-A05S-4GB-128GB-anhchinh.jpg" />
     <Content Include="Assets\img\Samsung-Galaxy-A05S-4GB-128GB-anhphu1.jpg" />
     <Content Include="Assets\img\Samsung-Galaxy-A05S-4GB-128GB-anhphu2.jpg" />
