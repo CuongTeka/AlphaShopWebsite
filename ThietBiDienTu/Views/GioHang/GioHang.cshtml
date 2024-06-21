@@ -72,13 +72,12 @@
                                                    type="button"
                                                    value="-"
                                                    onclick="minusProduct(this.parentElement.querySelector('.input-qty'))">
-                                            <input aria-label="quantity" class="input-qty" max="@item.SoLuongTon" min="-1" name="soluong" type="number" value="@Html.DisplayFor(modelItem => item.SoLuong)">
+                                            <input aria-label="quantity" class="input-qty" max="@item.SoLuongTon" min="1" name="soluong" type="number" value="@Html.DisplayFor(modelItem => item.SoLuong)" required>
                                             <input class="plus is-form"
                                                    type="button"
                                                    value="+"
-                                                   onclick="plusProduct(previousElementSibling)">
+                                                   onclick="plusProduct(this.parentElement.querySelector('.input-qty'))">
                                         </div>
-
 
                                         <button type="submit">Cập nhật</button>
                                     </form>
@@ -88,31 +87,21 @@
                                 </div>
 
                                 <form action="@Url.Action("RemoveFromCart")" method="post">
-
-
                                     <input type="hidden" name="masp" value="@item.MaSP" />
-
                                     <button type="submit">
                                         <i class="far fa-times-circle"></i>
                                     </button>
-
                                 </form>
                             </div>
-                            if(item.SoLuongTon < item.SoLuong)
+                            if (item.SoLuongTon < item.SoLuong)
                             {
                                 an = 1;
                             }
-
                         }
-
-
                     </div>
                 </div>
                 <div class="col l-4 m-12 s-12">
                     <div class="main__pay">
-
-
-
                         <div class="pay-info">
                             <div class="main__pay-text">
                                 Tổng tiền tạm tính
@@ -121,9 +110,8 @@
                                 @String.Format("{0:0,0}", @total)  ₫
                             </div>
                         </div>
-                        
-                        
-                        @if (total > 0 && an==0)
+
+                        @if (total > 0 && an == 0)
                         {
                             <div class="btn btn--default orange"><a href="@Url.Action("ThongTinDDH", "ThongTinDDH", new { })">Tiến hành thanh toán</a></div>
                         }
@@ -132,7 +120,6 @@
                             <h4>Vui lòng kiểm tra lại sản phẩm</h4>
                             <div class="btn btn--default orange"><a href="@Url.Action("SanPham", "SanPham", new { })">Mua lựa sản phẩm</a></div>
                         }
-
                     </div>
                 </div>
             </div>
@@ -141,13 +128,14 @@
 </body>
 
 <script>
-
     function plusProduct(qty) {
         qty.value++;
     }
 
     function minusProduct(qty) {
-        qty.value--;
+        if (qty.value > 1) {
+            qty.value--;
+        }
     }
 </script>
 <script src="~/Assets/User/js/commonscript.js"></script>

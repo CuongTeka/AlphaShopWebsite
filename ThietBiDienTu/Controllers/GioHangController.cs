@@ -122,28 +122,29 @@ namespace ThietBiDienTu.Controllers
         [HttpPost]
         public ActionResult UpdateQuantity(int masp, int soluong)
         {
-            // Gọi proc
             if (Session["TaiKhoan"] != null)
             {
                 var User = (KhachHang)Session["TaiKhoan"];
+
+                // Kiểm tra số lượng có phải là số dương hay không
                 if (soluong <= 0)
                 {
+                    // Nếu số lượng không phải là số dương, xóa sản phẩm khỏi giỏ hàng
                     db.RemoveFromCart(User.MaKH, masp);
                     return RedirectToAction("GioHang");
                 }
 
-
+                // Cập nhật số lượng sản phẩm trong giỏ hàng
                 db.UpdateCartItemQuantity(User.MaKH, masp, soluong);
 
                 return RedirectToAction("GioHang");
             }
             else
             {
-
                 return RedirectToAction("DangNhap", "TrangChu");
             }
-
         }
+
         public ActionResult RemoveFromCart(int masp)
         {
             if (Session["TaiKhoan"] != null)

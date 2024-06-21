@@ -322,17 +322,39 @@ namespace ThietBiDienTu.Controllers
             return View(DsDanhMuc);
         }
 
-        public ActionResult DanhMucSanPham(int? page, int madanhmuc)
+        public ActionResult DanhMucSanPham(int? page, int? madanhmuc, string sortOrder)
         {
+            if (!madanhmuc.HasValue)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "madanhmuc parameter is required.");
+            }
+
+            ViewBag.CurrentMadanhmuc = madanhmuc;
+            ViewBag.CurrentSortOrder = sortOrder;
+
             int pageSize = 9;
             int pageNumber = page ?? 1;
 
-            var DsDanhMucSanPham = db.SanPhams.Where(n => n.MaDanhMuc == madanhmuc);
+            var DsDanhMucSanPham = db.SanPhams.Where(n => n.MaDanhMuc == madanhmuc.Value);
 
-            var pagedDsDanhMucSanPham = DsDanhMucSanPham.OrderBy(s => s.TenSP).ToPagedList(pageNumber, pageSize);
+            switch (sortOrder)
+            {
+                case "price_asc":
+                    DsDanhMucSanPham = DsDanhMucSanPham.OrderBy(s => s.GiaTien);
+                    break;
+                case "price_desc":
+                    DsDanhMucSanPham = DsDanhMucSanPham.OrderByDescending(s => s.GiaTien);
+                    break;
+                default:
+                    DsDanhMucSanPham = DsDanhMucSanPham.OrderBy(s => s.TenSP);
+                    break;
+            }
+
+            var pagedDsDanhMucSanPham = DsDanhMucSanPham.ToPagedList(pageNumber, pageSize);
 
             return View(pagedDsDanhMucSanPham);
         }
+
 
         public ActionResult LoaiSanPham()
         {
