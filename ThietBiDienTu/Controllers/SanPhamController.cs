@@ -16,21 +16,12 @@ namespace ThietBiDienTu.Controllers
     public class SanPhamController : Controller
     {
         private ThietBiDienTuEntities1 db = new ThietBiDienTuEntities1();
-        //
-        // GET: /SanPham/
-        //Tìm kiếm sản phẩm
-        //public List<SanPham> ListSanPham(string Keyword)
-        //{
-        //    return db.SanPhams.Where(x => x.TenSP.Contains(Keyword)).Select(x => x.TenSP).ToList();
-        //}
-        //public JsonResult ListSanPham(string q)
-        //{
-           
-        //}
+
         public ActionResult Sidebar()
         {
             return View();
         }
+
         public ActionResult SanPham(int? page, string sortOrder)
         {
             int pageSize = 12;
@@ -43,40 +34,33 @@ namespace ThietBiDienTu.Controllers
                 var user = (KhachHang)Session["TaiKhoan"];
                 int userId = user.MaKH;
 
-                // Lấy danh sách sp
                 productList = db.SanPhams
                     .Include(x => x.DanhMuc)
                     .Include(x => x.HangSanXuat)
                     .Include(x => x.HinhAnh)
-                    .Where(x => x.TrangThai == 1); // Chỉ lấy sp có TrangThai = 1
+                    .Where(x => x.TrangThai == 1);
 
-                // Sử dụng hàm sắp xếp
                 productList = SapXep(productList, sortOrder);
                 ViewBag.CoTK = userId;
             }
             else
             {
-                // Chưa đăng nhập
-
-                // Lấy danh sách sp có TrangThai = 1
                 productList = db.SanPhams
                     .Where(x => x.TrangThai == 1)
                     .Include(x => x.DanhMuc)
                     .Include(x => x.HangSanXuat)
                     .Include(x => x.HinhAnh);
 
-                // Sử dụng hàm sắp xếp
                 productList = SapXep(productList, sortOrder);
                 ViewBag.CoTK = 0;
             }
 
-            // Phân trang
             var pagedProducts = productList.ToPagedList(pageNumber, pageSize);
-
-            ViewBag.SortOrder = sortOrder; // Truyền giá trị sortOrder vào ViewBag
+            ViewBag.SortOrder = sortOrder;
 
             return View(pagedProducts);
         }
+
         public IQueryable<SanPham> SapXep(IQueryable<SanPham> productList, string sortOrder)
         {
             ViewBag.CurrentSort = sortOrder;
@@ -100,18 +84,16 @@ namespace ThietBiDienTu.Controllers
 
             return productList;
         }
+
         public ActionResult BanChay()
         {
             if (Session["TaiKhoan"] != null)
             {
-
                 var User = (KhachHang)Session["TaiKhoan"];
-
                 int idUser = User.MaKH;
-
                 ViewBag.CoTK = idUser;
-                List<int> productIds = db.SanPhams
 
+                List<int> productIds = db.SanPhams
                     .OrderByDescending(p => p.SoLuongDaBanRa)
                     .Take(3)
                     .Select(p => p.MaSP)
@@ -125,17 +107,15 @@ namespace ThietBiDienTu.Controllers
                                 .ToList();
 
                 return View(sanpham);
-
             }
             else
             {
                 ViewBag.CoTK = 0;
                 List<int> productIds = db.SanPhams
-
-                             .OrderByDescending(p => p.SoLuongDaBanRa)
-                             .Take(3)
-                             .Select(p => p.MaSP)
-                             .ToList();
+                    .OrderByDescending(p => p.SoLuongDaBanRa)
+                    .Take(3)
+                    .Select(p => p.MaSP)
+                    .ToList();
 
                 var sanpham = db.SanPhams
                                 .Where(p => productIds.Contains(p.MaSP) && p.TrangThai == 1)
@@ -145,23 +125,18 @@ namespace ThietBiDienTu.Controllers
                                 .ToList();
 
                 return View(sanpham);
-
             }
-
-
         }
+
         public ActionResult SPBanChay()
         {
             if (Session["TaiKhoan"] != null)
             {
-
                 var User = (KhachHang)Session["TaiKhoan"];
-
                 int idUser = User.MaKH;
-
                 ViewBag.CoTK = idUser;
-                List<int> productIds = db.SanPhams
 
+                List<int> productIds = db.SanPhams
                     .OrderByDescending(p => p.SoLuongDaBanRa)
                     .Take(5)
                     .Select(p => p.MaSP)
@@ -175,17 +150,15 @@ namespace ThietBiDienTu.Controllers
                                 .ToList();
 
                 return View(sanpham);
-
             }
             else
             {
                 ViewBag.CoTK = 0;
                 List<int> productIds = db.SanPhams
-
-                             .OrderByDescending(p => p.SoLuongDaBanRa)
-                             .Take(5)
-                             .Select(p => p.MaSP)
-                             .ToList();
+                    .OrderByDescending(p => p.SoLuongDaBanRa)
+                    .Take(5)
+                    .Select(p => p.MaSP)
+                    .ToList();
 
                 var sanpham = db.SanPhams
                                 .Where(p => productIds.Contains(p.MaSP) && p.TrangThai == 1)
@@ -195,9 +168,7 @@ namespace ThietBiDienTu.Controllers
                                 .ToList();
 
                 return View(sanpham);
-
             }
-
         }
 
         [HttpPost]
@@ -205,21 +176,15 @@ namespace ThietBiDienTu.Controllers
         {
             if (Session["TaiKhoan"] != null)
             {
-
                 var User = (KhachHang)Session["TaiKhoan"];
                 var result = db.AddToCart(User.MaKH, productId, sl);
-
                 return RedirectToAction("SanPham");
-
-
             }
             else
             {
                 return RedirectToAction("DangNhap", "TrangChu");
             }
-
         }
-
 
         [HttpGet]
         public ActionResult ChiTietSanPham(int? id)
@@ -227,16 +192,12 @@ namespace ThietBiDienTu.Controllers
             Session["masplq"] = id;
             if (Session["TaiKhoan"] != null)
             {
-
                 var User = (KhachHang)Session["TaiKhoan"];
-
                 int idUser = User.MaKH;
                 var danhgia = db.DanhGiaSanPhams.Where(x => x.MaSP == id && x.TrangThai == 1);
                 ViewBag.sl = danhgia.Count();
-
-
-
                 ViewBag.CoTK = idUser;
+
                 if (id == null)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -269,7 +230,7 @@ namespace ThietBiDienTu.Controllers
                 }
 
                 SanPham sanpham = db.SanPhams.Find(id);
-                var danhgia = db.DanhGiaSanPhams.Where(x => x.MaSP == id && x.TrangThai==1);
+                var danhgia = db.DanhGiaSanPhams.Where(x => x.MaSP == id && x.TrangThai == 1);
                 ViewBag.sl = danhgia.Count();
                 if (sanpham == null)
                 {
@@ -287,9 +248,6 @@ namespace ThietBiDienTu.Controllers
 
                 return View(viewModel);
             }
-
-
-
         }
 
         [HttpPost]
@@ -304,15 +262,11 @@ namespace ThietBiDienTu.Controllers
 
                 try
                 {
-
                     string result = db.danhGia(maKH, maSP, noiDung, soSao).ToString();
-                    
-
                     return RedirectToAction("ChiTietSanPham", new { id = maSP });
                 }
                 catch (Exception ex)
                 {
-                    // Log lỗi
                     return View("Lỗi");
                 }
             }
@@ -321,25 +275,21 @@ namespace ThietBiDienTu.Controllers
                 return RedirectToAction("DangNhap");
             }
         }
+
         public ActionResult SpLienQuan()
         {
             int id = (int)Session["masplq"];
-            
-                
+            try
+            {
+                var sanPhamHienTai = db.SanPhams
+                    .Where(x => x.MaSP == id && x.TrangThai == 1)
+                    .Include(x => x.DanhMuc)
+                    .Include(x => x.HangSanXuat)
+                    .Include(x => x.HinhAnh)
+                    .FirstOrDefault();
 
-                try
+                if (sanPhamHienTai != null)
                 {
-                    // Lấy thông tin sản phẩm hiện tại
-                    var sanPhamHienTai = db.SanPhams
-                        .Where(x => x.MaSP == id && x.TrangThai == 1)
-                        .Include(x => x.DanhMuc)
-                        .Include(x => x.HangSanXuat)
-                        .Include(x => x.HinhAnh)
-                        .FirstOrDefault();
-
-                    if (sanPhamHienTai != null)
-                    {
-
                     var sanPhamLienQuan = db.SanPhams
                     .Where(x =>
                         x.MaSP != id &&
@@ -353,30 +303,25 @@ namespace ThietBiDienTu.Controllers
                     .Take(4)
                     .ToList();
 
-
                     return View(sanPhamLienQuan);
-                    }
-                    else
-                    {
-                        // Sản phẩm không tồn tại
-                        return View("Sản phẩm không tồn tại");
-                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    // Log lỗi
-                    return View("Lỗi");
+                    return View("Sản phẩm không tồn tại");
                 }
-            
+            }
+            catch (Exception ex)
+            {
+                return View("Lỗi");
+            }
         }
 
-
-        // GET: /DanhMucSanPham/
         public ActionResult DanhMuc()
         {
             var DsDanhMuc = db.DanhMucs.ToList();
             return View(DsDanhMuc);
         }
+
         public ActionResult DanhMucSanPham(int? page, int madanhmuc)
         {
             int pageSize = 9;
@@ -384,32 +329,34 @@ namespace ThietBiDienTu.Controllers
 
             var DsDanhMucSanPham = db.SanPhams.Where(n => n.MaDanhMuc == madanhmuc);
 
-            // Paginate the data
             var pagedDsDanhMucSanPham = DsDanhMucSanPham.OrderBy(s => s.TenSP).ToPagedList(pageNumber, pageSize);
 
             return View(pagedDsDanhMucSanPham);
-            //var DsDanhMucSanPham = db.SanPhams.Where(n => n.MaDanhMuc == madanhmuc).ToList();
-            //return View(DsDanhMucSanPham);
         }
-        //Sản phẩm theo hãng sản xuất
+
         public ActionResult LoaiSanPham()
         {
             var DsHangSanXuat = db.HangSanXuats.ToList();
             return View(DsHangSanXuat);
         }
-        public ActionResult SanPhamTheoLoai (int? page, int maloai)
+
+        public ActionResult SanPhamTheoLoai(int? page, int? maloai)
         {
+            if (maloai == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "maloai parameter is required.");
+            }
+
             int pageSize = 9;
             int pageNumber = page ?? 1;
 
-            var lstSanPham = db.SanPhams.Where(x => x.MaHang == maloai).OrderBy(x => x.TenSP);
-
-            // Paginate the data
+            var lstSanPham = db.SanPhams.Where(x => x.MaHang == maloai.Value).OrderBy(x => x.TenSP);
             var pagedSanPham = lstSanPham.ToPagedList(pageNumber, pageSize);
+
+            ViewBag.MaLoai = maloai; // Truyền giá trị maloai cho ViewBag để sử dụng trong view
 
             return View(pagedSanPham);
         }
-        
 
     }
 }

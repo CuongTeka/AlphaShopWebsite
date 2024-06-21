@@ -40,17 +40,17 @@ ul, ol {
 \*----------------------------*/
 
 .primary-btn {
-  display: inline-block;
-  padding: 12px 30px;
-  background-color: #D10024;
-  border: none;
-  border-radius: 40px;
-  color: #FFF;
-  text-transform: uppercase;
-  font-weight: 700;
-  text-align: center;
-  -webkit-transition: 0.2s all;
-  transition: 0.2s all;
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #ff590f;
+    border: none;
+    border-radius: 40px;
+    color: #FFF;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-align: center;
+    -webkit-transition: 0.2s all;
+    transition: 0.2s all;
 }
 
 .primary-btn:hover, .primary-btn:focus {
@@ -1001,19 +1001,19 @@ textarea.input {
   transform: translateY(100%);
 }*/
 
-.product .add-to-cart .add-to-cart-btn {
-  position: relative;
-  border: 2px solid transparent;
-  height: 40px;
-  padding: 0 30px;
-  background-color: #ef233c;
-  color: #FFF;
-  text-transform: uppercase;
-  font-weight: 700;
-  border-radius: 40px;
-  -webkit-transition: 0.2s all;
-  transition: 0.2s all;
-}
+    .product .add-to-cart .add-to-cart-btn {
+        position: relative;
+        border: 2px solid transparent;
+        height: 40px;
+        padding: 0 30px;
+        background-color: #ff590f;
+        color: #FFF;
+        text-transform: uppercase;
+        font-weight: 700;
+        border-radius: 40px;
+        -webkit-transition: 0.2s all;
+        transition: 0.2s all;
+    }
 
 .product .add-to-cart .add-to-cart-btn>i {
   position: absolute;

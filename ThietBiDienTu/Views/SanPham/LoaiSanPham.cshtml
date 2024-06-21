@@ -11,12 +11,9 @@
     <div class="checkbox-filter">
         @foreach (var loai in Model)
         {
-
-            <div class="input-checkbox">
-                @Html.ActionLink(loai.TenHang, "SanPhamTheoLoai", "SanPham", new { @maloai = loai.MaHang }, null)
-
-            </div>
-        }
+    <div class="input-checkbox">
+        @Html.ActionLink(loai.TenHang, "SanPhamTheoLoai", "SanPham", new { maloai = loai.MaHang }, null)
+    </div>}
 
     </div>
 </div>

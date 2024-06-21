@@ -14,16 +14,9 @@
         <div class="checkbox-filter">
             @foreach (var danhmuc in Model)
             {
-                <div class="input-checkbox">
-                    @Html.ActionLink(danhmuc.TenDanhMuc, "DanhMucSanPham", "SanPham", new { @madanhmuc = danhmuc.MaDanhMuc }, null)
-                    @*<input type="checkbox" id="category-1">
-                        <label for="category-1">
-                            <span></span>
-                            Laptops
-                            <small>(120)</small>
-                        </label>*@
-                </div>
-            }
+        <div class="input-checkbox">
+            @Html.ActionLink(danhmuc.TenDanhMuc, "DanhMucSanPham", "SanPham", new { madanhmuc = danhmuc.MaDanhMuc }, null)
+        </div>}
 
         </div>
     </div>
