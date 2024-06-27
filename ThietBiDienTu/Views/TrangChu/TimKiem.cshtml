@@ -114,7 +114,7 @@
 
                         <ul @*class="store-pagination"*@>
                             @(Model.PageCount<Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
-                            @Html.PagedListPager(Model, page => Url.Action("SanPham", new { page=page, @timkiem=ViewBag.tukhoa }))
+                            @Html.PagedListPager(Model, page => Url.Action("TimKiem", new { page=page, @timkiem=ViewBag.tukhoa }))
                             @*<li class="active">1</li>
                                 <li><a href="#">2</a></li>
                                 <li><a href="#">3</a></li>

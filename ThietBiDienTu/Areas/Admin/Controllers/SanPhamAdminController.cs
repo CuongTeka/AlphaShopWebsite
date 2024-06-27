@@ -432,20 +432,42 @@ namespace ThietBiDienTu.Areas.Admin.Controllers
         {
             if (Session["TaiKhoanAD"] != null)
             {
+                // Find the product and its related image
                 SanPham sanpham = db.SanPhams.Find(id);
                 HinhAnh hinhanh = db.HinhAnhs.Find(sanpham.MaHinhAnh);
-                db.SanPhams.Remove(sanpham);
-                db.HinhAnhs.Remove(hinhanh);
-                db.SaveChanges();
-                return RedirectToAction("Index");
 
+                // Check if the product exists
+                if (sanpham != null)
+                {
+                    // Find and delete related BaoHanh records
+                    var baoHanhs = db.BaoHanhs.Where(bh => bh.MaSP == sanpham.MaSP).ToList();
+                    foreach (var bh in baoHanhs)
+                    {
+                        db.BaoHanhs.Remove(bh);
+                    }
+
+                    // Remove the related image first
+                    if (hinhanh != null)
+                    {
+                        db.HinhAnhs.Remove(hinhanh);
+                    }
+
+                    // Remove the product
+                    db.SanPhams.Remove(sanpham);
+
+                    // Save changes to the database
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("Index");
             }
             else
             {
                 return RedirectToAction("DangNhap", "DangNhap");
             }
-            
         }
+
+
 
         protected override void Dispose(bool disposing)
         {
