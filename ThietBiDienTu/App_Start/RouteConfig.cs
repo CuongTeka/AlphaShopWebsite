@@ -24,6 +24,12 @@ namespace ThietBiDienTu
             //    url: "TimKiem",
             //    defaults: new { controller = "SanPham", action = "timkiem", id = UrlParameter.Optional }
             //);
+
+            routes.MapRoute(
+                name: "ImageApi",
+                url: "api/image/{action}",
+                defaults: new { controller = "Image" }
+            );
         }
     }
 }
