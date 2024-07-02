@@ -21,17 +21,15 @@ namespace ThietBiDienTu.Controllers
             {
                 var User = (KhachHang)Session["TaiKhoan"];
                 int idUser = User.MaKH;
-                var choxacnhan = db.GetOrderInfoByCustomerIdAndStatus(idUser, 1);
                 var ddh = db.DDHs.Include(d => d.KhachHang).Include(d => d.MaGiamGia1).Include(d => d.NhaVanChuyen).ToList();
                 return View(ddh.ToList());
             }
             else
             {
-                // Nếu session không tồn tại, có thể chuyển hướng đến trang đăng nhập hoặc thực hiện xử lý khác
-                return RedirectToAction("DangNhap", "TrangChu"); // Thay "TenController" bằng tên của controller đăng nhập
+                return RedirectToAction("DangNhap", "TrangChu");
             }
-
         }
+
         public ActionResult ChoXacNhan()
         {
             if (Session["TaiKhoan"] != null)
@@ -39,16 +37,14 @@ namespace ThietBiDienTu.Controllers
                 var User = (KhachHang)Session["TaiKhoan"];
                 int idUser = User.MaKH;
                 var choxacnhan = db.DDHs.Where(x => x.MaKH == idUser && x.TrangThai == 1);
-
-
                 return View(choxacnhan.ToList());
             }
             else
             {
-                // Nếu session không tồn tại, có thể chuyển hướng đến trang đăng nhập hoặc thực hiện xử lý khác
-                return RedirectToAction("DangNhap", "TrangChu"); // Thay "TenController" bằng tên của controller đăng nhập
+                return RedirectToAction("DangNhap", "TrangChu");
             }
         }
+
         public ActionResult CTChoXacNhan(int idDDH)
         {
             if (Session["TaiKhoan"] != null)
@@ -56,16 +52,14 @@ namespace ThietBiDienTu.Controllers
                 var User = (KhachHang)Session["TaiKhoan"];
                 int idUser = User.MaKH;
                 var CTchoxacnhan = db.GetOrderInfoByCustomerIdAndOrderIDAndStatus(idUser, idDDH, 1);
-
-
                 return View(CTchoxacnhan.ToList());
             }
             else
             {
-                // Nếu session không tồn tại, có thể chuyển hướng đến trang đăng nhập hoặc thực hiện xử lý khác
-                return RedirectToAction("DangNhap", "TrangChu"); // Thay "TenController" bằng tên của controller đăng nhập
+                return RedirectToAction("DangNhap", "TrangChu");
             }
         }
+
         public ActionResult DangGiaoHang()
         {
             if (Session["TaiKhoan"] != null)
@@ -73,16 +67,14 @@ namespace ThietBiDienTu.Controllers
                 var User = (KhachHang)Session["TaiKhoan"];
                 int idUser = User.MaKH;
                 var dangGH = db.DDHs.Where(x => x.MaKH == idUser && x.TrangThai == 2);
-
-
                 return View(dangGH.ToList());
             }
             else
             {
-                // Nếu session không tồn tại, có thể chuyển hướng đến trang đăng nhập hoặc thực hiện xử lý khác
-                return RedirectToAction("DangNhap", "TrangChu"); // Thay "TenController" bằng tên của controller đăng nhập
+                return RedirectToAction("DangNhap", "TrangChu");
             }
         }
+
         public ActionResult CTDangGiaoHang(int idDDH)
         {
             if (Session["TaiKhoan"] != null)
@@ -90,16 +82,14 @@ namespace ThietBiDienTu.Controllers
                 var User = (KhachHang)Session["TaiKhoan"];
                 int idUser = User.MaKH;
                 var CTdangGH = db.GetOrderInfoByCustomerIdAndOrderIDAndStatus(idUser, idDDH, 2);
-
-
                 return View(CTdangGH.ToList());
             }
             else
             {
-                // Nếu session không tồn tại, có thể chuyển hướng đến trang đăng nhập hoặc thực hiện xử lý khác
-                return RedirectToAction("DangNhap", "TrangChu"); // Thay "TenController" bằng tên của controller đăng nhập
+                return RedirectToAction("DangNhap", "TrangChu");
             }
         }
+
         public ActionResult DaHoanThanh()
         {
             if (Session["TaiKhoan"] != null)
@@ -107,16 +97,14 @@ namespace ThietBiDienTu.Controllers
                 var User = (KhachHang)Session["TaiKhoan"];
                 int idUser = User.MaKH;
                 var DaHoanThanh = db.GetOrderInfoByCustomerIdAndStatus(idUser, 3);
-
-
                 return View(DaHoanThanh.ToList());
             }
             else
             {
-                // Nếu session không tồn tại, có thể chuyển hướng đến trang đăng nhập hoặc thực hiện xử lý khác
-                return RedirectToAction("DangNhap", "TrangChu"); // Thay "TenController" bằng tên của controller đăng nhập
+                return RedirectToAction("DangNhap", "TrangChu");
             }
         }
+
         public ActionResult CTDaHoanThanh(int idDDH)
         {
             if (Session["TaiKhoan"] != null)
@@ -124,20 +112,29 @@ namespace ThietBiDienTu.Controllers
                 var User = (KhachHang)Session["TaiKhoan"];
                 int idUser = User.MaKH;
                 var CTDaHoanThanh = db.GetOrderInfoByCustomerIdAndOrderIDAndStatus(idUser, idDDH, 3);
-
-
                 return View(CTDaHoanThanh.ToList());
             }
             else
             {
-                // Nếu session không tồn tại, có thể chuyển hướng đến trang đăng nhập hoặc thực hiện xử lý khác
-                return RedirectToAction("DangNhap", "TrangChu"); // Thay "TenController" bằng tên của controller đăng nhập
+                return RedirectToAction("DangNhap", "TrangChu");
             }
         }
+
         public ActionResult HuyDon(int MaDDH)
         {
-            return View();
+            ViewBag.LyDoHuyDon = new SelectList(new List<string>
+            {
+                "Thời gian giao hàng quá lâu",
+                "Muốn thêm/xóa sản phẩm trong đơn hàng",
+                "Muốn thay đổi/gặp vấn đề với hình thức thanh toán",
+                "Thay đổi ý",
+                "Tìm thấy nơi khác giá tốt hơn",
+                "Thay đổi địa chỉ giao hàng"
+            });
+
+            return View(new HuyHang { MaDDH = MaDDH });
         }
+
         [HttpPost]
         public ActionResult HuyDon(int MaDDH, String LyDo)
         {
@@ -151,11 +148,10 @@ namespace ThietBiDienTu.Controllers
             }
             else
             {
-
                 return RedirectToAction("DangNhap", "TrangChu");
             }
-
         }
+
         public ActionResult DaHuy()
         {
             if (Session["TaiKhoan"] != null)
@@ -164,18 +160,14 @@ namespace ThietBiDienTu.Controllers
                 int idUser = User.MaKH;
 
                 var dsHuy = db.sp_HienThiHuyDH(idUser);
-
                 return View(dsHuy.ToList());
-
-
-                
             }
             else
             {
-                // Nếu session không tồn tại, có thể chuyển hướng đến trang đăng nhập hoặc thực hiện xử lý khác
-                return RedirectToAction("DangNhap", "TrangChu"); // Thay "TenController" bằng tên của controller đăng nhập
+                return RedirectToAction("DangNhap", "TrangChu");
             }
         }
+
         public ActionResult CTDaHuy(int idDDH)
         {
             if (Session["TaiKhoan"] != null)
@@ -183,16 +175,14 @@ namespace ThietBiDienTu.Controllers
                 var User = (KhachHang)Session["TaiKhoan"];
                 int idUser = User.MaKH;
                 var CTDaHuy = db.GetOrderInfoByCustomerIdAndOrderIDAndStatus(idUser, idDDH, 4);
-
-
                 return View(CTDaHuy.ToList());
             }
             else
             {
-
-                return RedirectToAction("DangNhap", "TrangChu"); // Thay "TenController" bằng tên của controller đăng nhập
+                return RedirectToAction("DangNhap", "TrangChu");
             }
         }
+
         // GET: /DDHKH/Details/5
         public ActionResult Details(int? id)
         {
@@ -218,8 +208,6 @@ namespace ThietBiDienTu.Controllers
         }
 
         // POST: /DDHKH/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "MaDDH,NgayDat,TrangThai,MaGiamGia,ThanhTien,SDTNguoiNhan,MaNVC,MaKH,TenNguoiNhan,SoNha,TenDuong,PhuongXa,QuanHuyen,TinhThanh,GhiChu")] DDH ddh)
@@ -256,8 +244,6 @@ namespace ThietBiDienTu.Controllers
         }
 
         // POST: /DDHKH/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "MaDDH,NgayDat,TrangThai,MaGiamGia,ThanhTien,SDTNguoiNhan,MaNVC,MaKH,TenNguoiNhan,SoNha,TenDuong,PhuongXa,QuanHuyen,TinhThanh,GhiChu")] DDH ddh)
